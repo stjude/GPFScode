@@ -55,7 +55,6 @@ def mmget_state():
     return v
 
 if __name__=="__main__":
-    epoch0 = datetime.datetime(1970,1,1)
 
     print "*****************************************"
     print "* MBRps .... MB read per second         *"
@@ -114,8 +113,6 @@ if __name__=="__main__":
         INDps = ( v2[7] - v1[7] )/dt
 
         values = [MBRps, MBWps, FOps, FCps, Rps, kRps, Wps, kWps, RDps, INDps]
-        epochTime = 0.0
-        #epochTime = (datetime.datetime.now() - epoch0).total_seconds()
         epochTime = datetime.datetime.now().strftime('%s')
         hostname = socket.gethostname()
         print "%10s %10s"%( hostname, epochTime ),

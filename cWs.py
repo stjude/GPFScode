@@ -19,6 +19,7 @@
 
 import time
 import math
+import datetime
 
 ### NOTE: This program uses 'subprocess.Popen()' with 'shell=True' to call 'mmpmon'. Please use at your own risk.
 ### For warnings regarding this (often frowned upon) formalism, see https://docs.python.org/2/library/subprocess.html#frequently-used-arguments
@@ -62,12 +63,18 @@ if __name__=="__main__":
 
     ws = [ 1.0/float(abs(nitems-i)) for i in reversed(range(nitems)) ] ### weight vector for convolution
     Ws = []
+    print "%10s %10s %10s"%( 'hostname', 'epochTime', 'cWs')
     while( True ):
         if( len(Ws) > nitems ):
             del Ws[-1]
         Ws.insert(0, get_tot_wait_time())
         den = sum(ws[:len(Ws)])
         cWs = float( sum( [w*W for (w,W) in zip(ws, Ws)] ))/den
-        print "1 cWs %.2f"%(cWs)
+
+        epochTime = datetime.datetime.now().strftime('%s')
+        hostname = socket.gethostname()
+
+        print "%10s %10s %10.2f"%( hostname, epochTime, cWs)
+
         sys.stdout.flush()
         time.sleep(sleep_time)
