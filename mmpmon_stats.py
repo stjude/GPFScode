@@ -21,6 +21,7 @@
 import time
 import sys
 import datetime
+import socket
 
 ### NOTE: This program uses 'subprocess.Popen()' with 'shell=True' to call 'mmpmon'. Please use at your own risk.
 ### For warnings regarding this (often frowned upon) formalism, see https://docs.python.org/2/library/subprocess.html#frequently-used-arguments
@@ -68,7 +69,7 @@ if __name__=="__main__":
     print "* RDps ..... Directory reads per second *"
     print "* INDps .... Inode changes per second   *"
     print "*****************************************"
-    metrics = ['EpochTime', 'MBRps', 'MBWps', 'FOps', 'FCps', 'Rps', 'kRps', 'Wps', 'kWps', 'RDps', 'INDps']
+    metrics = ['Hostname', 'EpochTime', 'MBRps', 'MBWps', 'FOps', 'FCps', 'Rps', 'kRps', 'Wps', 'kWps', 'RDps', 'INDps']
     for m in metrics:
         print "%10s"%( m ),
     print ""
@@ -116,7 +117,8 @@ if __name__=="__main__":
         epochTime = 0.0
         #epochTime = (datetime.datetime.now() - epoch0).total_seconds()
         epochTime = datetime.datetime.now().strftime('%s')
-        print "%10s"%( epochTime ),
+        hostname = socket.gethostname()
+        print "%10s %10s"%( hostname, epochTime ),
         for v in values:
             print "%10.2f"%( v ),
         print ""
